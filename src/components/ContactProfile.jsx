@@ -55,7 +55,7 @@ function ContactProfile() {
 	if (!person)
 		return (
 			<>
-				<NavigationMenu />{' '}
+				<NavigationMenu />
 				<div className="contact-profile">
 					<p className="loading">Loading...</p>
 				</div>
@@ -71,9 +71,8 @@ function ContactProfile() {
 						{person.firstName} {person.lastName}
 					</h2>
 
-					<p>
-						{person.street} {person.city}
-					</p>
+					<p>Street: {person.street}</p>
+					<p>City: {person.city}</p>
 
 					<button onClick={handleEdit}>Edit</button>
 					<button onClick={handleDelete}>Delete</button>
