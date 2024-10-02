@@ -1,13 +1,44 @@
 import { useState, useEffect, useContext } from 'react';
 import NavigationMenu from './NavigationMenu';
-import { ContactsContext } from '../context';
-import { useParams } from 'react-router-dom';
+import { ContactsContext, FormContext } from '../context';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/ContactProfile.css';
 
 function ContactProfile() {
 	const [person, setPerson] = useState(null);
 	const { id } = useParams();
-	const { contactsData } = useContext(ContactsContext);
+	const { contactsData, setContactsData } = useContext(ContactsContext);
+	const { setFormData } = useContext(FormContext);
+	const navigate = useNavigate();
+
+	const handleDelete = () => {
+		fetch(`https://boolean-uk-api-server.fly.dev/johnfa1508/contact/${id}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((response) => {
+				if (response.ok) {
+					setContactsData((prevContacts) =>
+						prevContacts.filter((contact) => contact.id !== parseInt(id))
+					);
+
+					alert('Contact deleted successfully.');
+					navigate('/contacts');
+				} else {
+					alert('Failed to delete the contact.');
+				}
+			})
+			.catch((error) => {
+				console.error('Error deleting contact:', error);
+			});
+	};
+
+	const handleEdit = () => {
+		setFormData(person);
+		navigate('/create');
+	};
 
 	useEffect(() => {
 		if (contactsData && id) {
@@ -21,7 +52,15 @@ function ContactProfile() {
 		}
 	}, [contactsData, id]);
 
-	if (!person) return <p className="loading">Loading...</p>;
+	if (!person)
+		return (
+			<>
+				<NavigationMenu />{' '}
+				<div className="contact-profile">
+					<p className="loading">Loading...</p>
+				</div>
+			</>
+		);
 
 	return (
 		<>
@@ -31,9 +70,13 @@ function ContactProfile() {
 					<h2>
 						{person.firstName} {person.lastName}
 					</h2>
+
 					<p>
 						{person.street} {person.city}
 					</p>
+
+					<button onClick={handleEdit}>Edit</button>
+					<button onClick={handleDelete}>Delete</button>
 				</article>
 			</div>
 		</>

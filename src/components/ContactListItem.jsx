@@ -7,6 +7,7 @@ function ContactListItem({ contact }) {
 				<span>
 					{contact.firstName} {contact.lastName}
 				</span>
+
 				<Link to={`/view/${contact.id}`}>View</Link>
 			</li>
 		</>

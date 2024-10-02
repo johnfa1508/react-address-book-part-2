@@ -14,6 +14,7 @@ function App() {
 		lastName: '',
 		street: '',
 		city: '',
+		id: '',
 	});
 
 	return (
