@@ -7,6 +7,7 @@ ContextProvider
 
 
 ContactProfile (States: person, setPerson)
+NavigationMenu
 
 FILES
 context.jsx

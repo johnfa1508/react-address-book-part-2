@@ -1,15 +1,15 @@
-import { useContext } from 'react';
-import { ContactsContext } from '../context';
+import { Link } from 'react-router-dom';
 
 function ContactListItem({ contact }) {
-	const { handleViewContact } = useContext(ContactsContext);
 	return (
 		<>
 			<li>
 				{contact.firstName} {contact.lastName}
 			</li>
 
-			<button onClick={() => handleViewContact(contact.id)}>View</button>
+			<Link to={`/view/${contact.id}`}>
+				<h3>View</h3>
+			</Link>
 		</>
 	);
 }

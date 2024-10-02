@@ -1,22 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import NavigationMenu from './NavigationMenu';
+import { ContactsContext } from '../context';
+import { useParams } from 'react-router-dom';
 
-function ContactProfile(props) {
+function ContactProfile() {
 	const [person, setPerson] = useState(null);
-	const { id, contacts } = props;
+	const { id } = useParams();
+	const { contactsData } = useContext(ContactsContext);
 
 	useEffect(() => {
-		if (contacts && id) {
-			const matchingPerson = contacts.find((p) => p.login.uuid === id);
+		if (contactsData && id) {
+			const matchingPerson = contactsData.find(
+				(p) => p.id === parseInt(id, 10)
+			);
 
 			if (matchingPerson) {
 				setPerson(matchingPerson);
 			}
 		}
-	}, [contacts, id]);
+	}, [contactsData, id]);
 
 	if (!person) return <p>Loading...</p>;
+
 	return (
 		<>
+			<NavigationMenu />
 			<article>
 				<h2>
 					{person.firstName} {person.lastName}

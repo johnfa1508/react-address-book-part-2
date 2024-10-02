@@ -1,43 +1,22 @@
-import { useState } from 'react';
-import ContactsList from './ContactsList';
-import Form from './Form';
-import ContextProvider from './ContextProvider';
+// import ContactsList from './ContactsList';
+import NavigationMenu from './NavigationMenu';
 
 function Dashboard() {
-	const [contactsData, setContactsData] = useState([]);
-	const [formData, setFormData] = useState({
-		firstName: '',
-		lastName: '',
-		street: '',
-		city: '',
-	});
-
-	const handleViewContact = (id) => {
-		console.log('view profile ' + id);
-		// api call to https://boolean-uk-api-server.fly.dev/johnfa1508/contact/{id}
-	};
-
 	return (
 		<>
-			<ContextProvider
-				contactsData={contactsData}
-				setContactsData={setContactsData}
-				formData={formData}
-				setFormData={setFormData}
-				handleViewContact={handleViewContact}
-			>
-				{/* TODO: MAKE INTO COMPONENT WITH ROUTING & LINKING */}
-				<h2>Menu</h2>
-				<nav>
-					<ul>
-						<li>Contacts List</li>
-						<li>Add New Contact</li>
-					</ul>
-				</nav>
+			<NavigationMenu />
 
-				<ContactsList />
-				<Form />
-			</ContextProvider>
+			{/*
+        <NavigationMenu />
+				<section>
+					<h2>Contacts List</h2>
+					<ContactsList />
+				</section>
+        
+        <section>
+					<h2>Add New Contact</h2>
+					<Form />
+				</section>*/}
 		</>
 	);
 }
