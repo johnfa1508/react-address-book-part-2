@@ -1,10 +1,13 @@
 import { useContext, useEffect } from 'react';
 import NavigationMenu from './NavigationMenu';
 import { ContactsContext, FormContext } from '../context';
+import { useNavigate } from 'react-router-dom';
+import '../styles/Form.css';
 
 function Form() {
 	const { formData, setFormData } = useContext(FormContext);
 	const { contactsData, setContactsData } = useContext(ContactsContext);
+	const navigate = useNavigate();
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
@@ -15,10 +18,21 @@ function Form() {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		console.log(formData);
-		// TODO: Post this to API
 		const newContact = { ...formData, id: contactsData.length + 1 };
 
 		setContactsData((prevContacts) => [...prevContacts, newContact]);
+
+		fetch('https://boolean-uk-api-server.fly.dev/johnfa1508/contact', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(newContact),
+		})
+			.then((response) => response.json())
+			.then(() => {
+				navigate('/contacts');
+			});
 
 		setFormData({
 			firstName: '',
@@ -35,56 +49,51 @@ function Form() {
 	return (
 		<>
 			<NavigationMenu />
-			<h2>Create Contact</h2>
-			<>
-				<form className="form" onSubmit={handleSubmit}>
-					<label>
-						First Name:
-						<input
-							type="text"
-							name="firstName"
-							onChange={handleChange}
-							value={formData.firstName}
-						/>
-					</label>
 
-					<label>
-						Last Name:
-						<input
-							type="text"
-							name="lastName"
-							onChange={handleChange}
-							value={formData.lastName}
-						/>
-					</label>
-
-					<label>
-						Street:
-						<input
-							type="text"
-							name="street"
-							onChange={handleChange}
-							value={formData.street}
-						/>
-					</label>
-
-					<label>
-						City:
-						<input
-							type="text"
-							name="city"
-							onChange={handleChange}
-							value={formData.city}
-						/>
-					</label>
-
+			<form className="form" onSubmit={handleSubmit}>
+				<h2>Create Contact</h2>
+				<label>
+					First Name:
 					<input
-						className="form__submit"
-						type="submit"
-						value="Submit Survey!"
+						type="text"
+						name="firstName"
+						onChange={handleChange}
+						value={formData.firstName}
 					/>
-				</form>
-			</>
+				</label>
+
+				<label>
+					Last Name:
+					<input
+						type="text"
+						name="lastName"
+						onChange={handleChange}
+						value={formData.lastName}
+					/>
+				</label>
+
+				<label>
+					Street:
+					<input
+						type="text"
+						name="street"
+						onChange={handleChange}
+						value={formData.street}
+					/>
+				</label>
+
+				<label>
+					City:
+					<input
+						type="text"
+						name="city"
+						onChange={handleChange}
+						value={formData.city}
+					/>
+				</label>
+
+				<input className="form__submit" type="submit" value="Submit Survey!" />
+			</form>
 		</>
 	);
 }

@@ -2,6 +2,7 @@ import ContactListItem from './ContactListItem';
 import { ContactsContext } from '../context';
 import { useEffect, useContext } from 'react';
 import NavigationMenu from './NavigationMenu';
+import '../styles/ContactList.css';
 
 function ContactsList() {
 	const { contactsData, setContactsData } = useContext(ContactsContext);
@@ -21,12 +22,14 @@ function ContactsList() {
 	return (
 		<>
 			<NavigationMenu />
-			<h2>Contacts</h2>
-			<ul>
-				{contactsData.map((contactItem) => (
-					<ContactListItem contact={contactItem} key={contactItem.id} />
-				))}
-			</ul>
+			<div className="contact-list">
+				<h2>Contacts</h2>
+				<ul className="contact-list-ul">
+					{contactsData.map((contactItem) => (
+						<ContactListItem contact={contactItem} key={contactItem.id} />
+					))}
+				</ul>
+			</div>
 		</>
 	);
 }

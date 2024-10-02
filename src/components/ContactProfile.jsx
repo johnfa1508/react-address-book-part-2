@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import NavigationMenu from './NavigationMenu';
 import { ContactsContext } from '../context';
 import { useParams } from 'react-router-dom';
+import '../styles/ContactProfile.css';
 
 function ContactProfile() {
 	const [person, setPerson] = useState(null);
@@ -20,19 +21,21 @@ function ContactProfile() {
 		}
 	}, [contactsData, id]);
 
-	if (!person) return <p>Loading...</p>;
+	if (!person) return <p className="loading">Loading...</p>;
 
 	return (
 		<>
 			<NavigationMenu />
-			<article>
-				<h2>
-					{person.firstName} {person.lastName}
-				</h2>
-				<p>
-					{person.street} {person.city}
-				</p>
-			</article>
+			<div className="contact-profile">
+				<article>
+					<h2>
+						{person.firstName} {person.lastName}
+					</h2>
+					<p>
+						{person.street} {person.city}
+					</p>
+				</article>
+			</div>
 		</>
 	);
 }

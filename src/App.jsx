@@ -1,4 +1,4 @@
-import './App.css';
+import './styles/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import Dashboard from './components/Dashboard';
@@ -18,21 +18,23 @@ function App() {
 
 	return (
 		<>
-			<ContextProvider
-				contactsData={contactsData}
-				setContactsData={setContactsData}
-				formData={formData}
-				setFormData={setFormData}
-			>
-				<BrowserRouter>
-					<Routes>
-						<Route path="/" element={<Dashboard />} />
-						<Route path="/contacts" element={<ContactsList />} />
-						<Route path="/create" element={<Form />} />
-						<Route path="/view/:id" element={<ContactProfile />} />
-					</Routes>
-				</BrowserRouter>
-			</ContextProvider>
+			<div className="main-content">
+				<ContextProvider
+					contactsData={contactsData}
+					setContactsData={setContactsData}
+					formData={formData}
+					setFormData={setFormData}
+				>
+					<BrowserRouter>
+						<Routes>
+							<Route path="/" element={<Dashboard />} />
+							<Route path="/contacts" element={<ContactsList />} />
+							<Route path="/create" element={<Form />} />
+							<Route path="/view/:id" element={<ContactProfile />} />
+						</Routes>
+					</BrowserRouter>
+				</ContextProvider>
+			</div>
 		</>
 	);
 }

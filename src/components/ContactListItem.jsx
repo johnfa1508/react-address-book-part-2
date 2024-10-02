@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom';
 function ContactListItem({ contact }) {
 	return (
 		<>
-			<li>
-				{contact.firstName} {contact.lastName}
+			<li className="contact-list-item">
+				<span>
+					{contact.firstName} {contact.lastName}
+				</span>
+				<Link to={`/view/${contact.id}`}>View</Link>
 			</li>
-
-			<Link to={`/view/${contact.id}`}>
-				<h3>View</h3>
-			</Link>
 		</>
 	);
 }
